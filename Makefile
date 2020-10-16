@@ -12,7 +12,7 @@ init.o :
 affichage.o : 
 	gcc -c ./src/affichage.c -o ./obj/affichage.o -Wall
 
-COMP : main.o init.o affichage.o -Wall
+COMP : main.o init.o affichage.o
 	gcc -o COMP ./obj/main.o ./obj/init.o ./obj/affichage.o -Wall
 
 NETTOYAGE : 

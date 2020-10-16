@@ -3,10 +3,29 @@
 #include "../header/main.h"
 #include "../header/init.h"
 
-LABYRINTHE allocation_labyrinthe(int nbLignes, int nbColonnes)
+LABYRINTHE init_labyrinthe(FILE* FIC,char* filename)
 {
+    int nbLignes,nbColonnes,entreeX,entreeY,sortieX,sortieY;
+
+    FIC = fopen(filename,"r");
+    if (FIC == NULL)
+    {
+        printf("Erreur lors de l'ouverture ");
+        exit(EXIT_FAILURE);
+    }
+    fseek(FIC,0,SEEK_SET);
+    fscanf(FIC,"%d %d %d %d %d %d",&nbLignes,&nbColonnes,&entreeX,&entreeY,&sortieX,&sortieY);
+    fclose(FIC);
     LABYRINTHE labyrinthe;
     labyrinthe.map = malloc(sizeof(unsigned short int*)*nbLignes);
+    labyrinthe.nbLignes = nbLignes;
+    labyrinthe.nbColonnes = nbColonnes;
+    labyrinthe.entree_x = entreeX;
+    labyrinthe.entree_y = entreeY;
+    labyrinthe.sortie_x = sortieX;
+    labyrinthe.sortie_y = sortieY;
+    labyrinthe.IA_x = entreeX;
+    labyrinthe.IA_y = entreeY;
     
     for (int i = 0; i < nbLignes; i++)
     {
@@ -40,7 +59,7 @@ int validation_fichier(FILE* fic, char* nom)
 
 }
 
-void init_Labyrinthe(int NB_L, int NB_C, u_int16_t** MAT, FILE* FIC,char* filename)
+void remplissage_Map( LABYRINTHE labyrinthe, FILE* FIC,char* filename)
 {
     int valeur;
     char c;
@@ -54,24 +73,19 @@ void init_Labyrinthe(int NB_L, int NB_C, u_int16_t** MAT, FILE* FIC,char* filena
     }
 
         fseek(FIC,0,SEEK_SET);
-
-        while (c!='\n') // pour passer la première ligne
+        while (c !='\n')    //skip la premiere ligne car ne nous interesse pas ici
         {
-            c=getc(FIC);
+            c = fgetc(FIC);
         }
+        
 
-            for (int i = 0; i < NB_L; i++)
+            for (int i = 0; i < labyrinthe.nbLignes; i++)
             {
-                for (int j = 0; j < NB_C; j++)
+                for (int j = 0; j < labyrinthe.nbColonnes; j++)
                 {
                     fscanf(FIC, "%d",&valeur);
-                    MAT[i][j] = valeur;
+                    labyrinthe.map[i][j] = valeur;
                 }
             }
         fclose(FIC);
-}
-
-void affectation_paramettres(int nbLignes,int nbcolones, int Entree_x, int Entree_y, int Sortie_x, int Sortie_y)
-{
-
 }

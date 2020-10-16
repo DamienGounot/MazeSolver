@@ -7,8 +7,7 @@
 
 int main(int argc, char** argv){
 srand(time(NULL));
-const int nbLignes;
-const int nbColonnes;
+
 char choixMenu;
 char* filename;
 int validationFichier;
@@ -39,17 +38,14 @@ if (argc>1) // si on passe en paramettre un fichier
     {
         return(EXIT_FAILURE);
     }
-    else
-    {
-        void affectation_paramettres(nbLignes,nbColonnes,Entree_x,Entree_y,Sortie_x,Sortie_y);
-    }
+
     
     
 
 // Ici Environnement avec Carte validée
 
-LABYRINTHE labyrinthe = allocation_labyrinthe(nbLignes,nbColonnes);  // allocation et init de la map
-init_Labyrinthe(nbLignes,nbColonnes,labyrinthe.map,fichier,filename);
+LABYRINTHE labyrinthe = init_labyrinthe(fichier,filename);  // allocation et init du labyrinthe
+remplissage_Map(labyrinthe,fichier,filename);
 
  
     return EXIT_SUCCESS;
