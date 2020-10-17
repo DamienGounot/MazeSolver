@@ -37,3 +37,15 @@ void affiche_labyrinthe(int NB_L, int NB_C, u_int16_t** MAT)
     }
     
 }
+
+
+void affiche_u_int16_t(unsigned short int element)
+{
+    printf("Valeur u_int16_t de %d: ",element);
+
+    for (int k = 15; k >= 0; k--) 
+    {
+        printf("%c",(element>>k)&1?'1':'0');
+    }
+    printf("\n");
+}
