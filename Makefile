@@ -1,4 +1,4 @@
-all : CLEAR COMP CLEAR LAUNCH
+all : CLEAR COMP CLEAR
 
 CLEAR:
 	clear
@@ -12,11 +12,14 @@ init.o :
 affichage.o : 
 	gcc -c ./src/affichage.c -o ./obj/affichage.o -Wall
 
-COMP : main.o init.o affichage.o
-	gcc -o COMP ./obj/main.o ./obj/init.o ./obj/affichage.o -Wall
+validation.o : 
+	gcc -c ./src/validation.c  -o ./obj/validation.o -Wall
+
+COMP : main.o init.o affichage.o validation.o
+	gcc -o COMP ./obj/main.o ./obj/init.o ./obj/affichage.o ./obj/validation.o -Wall
 
 NETTOYAGE : 
 	rm ./obj/*.o
 
 LAUNCH :
-	-./COMP -Wall
+	-./COMP

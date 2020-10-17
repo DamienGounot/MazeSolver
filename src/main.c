@@ -4,31 +4,32 @@
 #include "../header/main.h"
 #include "../header/init.h"
 #include "../header/affichage.h"
+#include "../header/validation.h"
 
 int main(int argc, char** argv){
 srand(time(NULL));
 
-char choixMenu;
+int choixMenu;
 char* filename;
 int validationFichier;
 FILE* fichier = NULL;
 
-if (argc>1) // si on passe en paramettre un fichier 
+if (argv[1]) // si on passe en paramettre un fichier 
 {
     filename = argv[1];
     validationFichier = validation_fichier(fichier,filename); // on le test
+    printf("%d",validationFichier);
 }else
 {       
-        do
+        while (choixMenu !=1 || choixMenu !=2 )
         {
-        scanf("%c",&choixMenu);
         system("clear");
         display_menu("./UI/menu");
         printf("\033[%d;%dH",14,40);
-        
-        } while (choixMenu !='1' || choixMenu !='2' );
+        scanf("%d",&choixMenu);
+        }
 
-        if (!choixMenu)
+        if (choixMenu == 2)
         {
             return(EXIT_SUCCESS);
         }

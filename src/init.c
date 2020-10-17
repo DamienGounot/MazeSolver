@@ -45,23 +45,10 @@ void LIB_MAT(int NB_L,int** MAT)
     free(MAT);
 }
 
-int validation_fichier(FILE* fic, char* nom)
-{
-    fic = fopen(nom,"r");
-    if (fic == NULL)
-    {
-        printf("Erreur lors de l'ouverture ");
-        return(0);
-    }
-
-    char c;
-    //.......
-
-}
 
 void remplissage_Map( LABYRINTHE labyrinthe, FILE* FIC,char* filename)
 {
-    int valeur;
+    u_int16_t valeur;
     char c;
 
     FIC = fopen(filename,"r");
@@ -83,7 +70,7 @@ void remplissage_Map( LABYRINTHE labyrinthe, FILE* FIC,char* filename)
             {
                 for (int j = 0; j < labyrinthe.nbColonnes; j++)
                 {
-                    fscanf(FIC, "%d",&valeur);
+                    fscanf(FIC, "%hu",&valeur);
                     labyrinthe.map[i][j] = valeur;
                 }
             }
