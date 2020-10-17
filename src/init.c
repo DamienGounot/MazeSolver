@@ -6,13 +6,14 @@
 LABYRINTHE init_labyrinthe(FILE* FIC,char* filename)
 {
     int nbLignes,nbColonnes,entreeX,entreeY,sortieX,sortieY;
-
     FIC = fopen(filename,"r");
+
     if (FIC == NULL)
     {
-        printf("Erreur lors de l'ouverture ");
+        printf("Erreur lors de l'ouverture\n");
         exit(EXIT_FAILURE);
     }
+
     fseek(FIC,0,SEEK_SET);
     fscanf(FIC,"%d %d %d %d %d %d",&nbLignes,&nbColonnes,&entreeX,&entreeY,&sortieX,&sortieY);
     fclose(FIC);
@@ -36,7 +37,7 @@ LABYRINTHE init_labyrinthe(FILE* FIC,char* filename)
 }
 
 
-void LIB_MAT(int NB_L,int** MAT)
+void LIB_MAT(int NB_L,unsigned short int** MAT)
 {
     for (int i = 0; i < NB_L; i++)
     {
