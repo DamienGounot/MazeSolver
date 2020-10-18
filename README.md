@@ -1,2 +1,10 @@
-# MazeSolver
-IA simulation to solve maze
+# MazeRunner
+IA simulation of maze escape
+
+systeme de coordonnées :
+
+--------> y
+|
+|
+|
+x
