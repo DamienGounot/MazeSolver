@@ -112,12 +112,48 @@ void cassage_segment_droite(unsigned short int** matrice,int nbLin,int nbCol)
 
 void cassage_segment_bas(unsigned short int** matrice,int nbLin,int nbCol)
 {
+        int random_g,random_h;
 
+    for (int i = nbCol -1; i > 0; i--) // pour tout le segment du bas (sauf derniere case)
+    {
+        random_g = rand()%4;
+        random_h = rand()%4;
+
+        if (!random_g)
+        {
+            matrice[nbLin-1][i] = (matrice[nbLin-1][i])^1; // mur gauche case en cours
+            matrice[nbLin-1][i-1] = (matrice[nbLin-1][i-1])^4; // mur droit case de gauche
+        }
+        
+        if (!random_h)
+        {
+            matrice[nbLin-1][i] = (matrice[nbLin-1][i])^8; // mur haut case en cours
+            matrice[nbLin-2][i] = (matrice[nbLin-2][i])^2; // mur bas case du haut
+        }
+    }
 }
 
 void cassage_segment_gauche(unsigned short int** matrice,int nbLin,int nbCol)
 {
+    int random_d,random_h;
 
+    for (int i = nbLin -1; i > 0; i--) // pour tout le segment de gauche (sauf derniere case)
+    {
+        random_d = rand()%4;
+        random_h = rand()%4;
+
+        if (!random_d)
+        {
+            matrice[i][0] = (matrice[i][0])^4; // mur droit case en cours
+            matrice[i][1] = (matrice[i][1])^1; // mur gauche case de droite            
+        }
+
+        if (!random_h)
+        {
+        matrice[i][0] = (matrice[i][0]>>3)^8; // mur haut case en cours
+        matrice[i-1][0] = (matrice[i-1][0]>>1)^2; // mur bas case du haut
+        }
+    }
 }
 
 void cassage_segments_externes(unsigned short int** matrice,int nbLin,int nbCol)
