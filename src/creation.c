@@ -150,8 +150,8 @@ void cassage_segment_gauche(unsigned short int** matrice,int nbLin,int nbCol)
 
         if (!random_h)
         {
-        matrice[i][0] = (matrice[i][0]>>3)^8; // mur haut case en cours
-        matrice[i-1][0] = (matrice[i-1][0]>>1)^2; // mur bas case du haut
+        matrice[i][0] = (matrice[i][0])^8; // mur haut case en cours
+        matrice[i-1][0] = (matrice[i-1][0])^2; // mur bas case du haut
         }
     }
 }
