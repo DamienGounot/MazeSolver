@@ -11,10 +11,10 @@ void display_menu(char* nom_fichier)
 	menu = fopen(nom_fichier, "r");
         if (menu == NULL)
         {
-            printf("Pas de menu ! \n");
+            printf("[DEBUG][display_menu] Pas de menu ! \n");
         exit(-1);
         }
-
+        system("clear");
         while (caract != EOF)
         {
             caract = fgetc(menu);

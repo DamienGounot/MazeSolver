@@ -14,7 +14,7 @@ int validation_fichier(FILE* fic, char* nom)
     fic = fopen(nom,"r");
     if (fic == NULL)
     {
-        printf("Erreur lors de l'ouverture du fichier passé en parametre \n");
+        printf("[DEBUG][validation_fichier]Erreur lors de l'ouverture du fichier passé en parametre \n");
         return 0;
     }
 
@@ -36,7 +36,7 @@ int validation_fichier(FILE* fic, char* nom)
             matrice[i][j] = element;
         }    
     }
-
+    fclose(fic);
     int valid_contour = validation_contour(matrice,nbLignes,nbColonnes);
     int valid_segment = validation_segments_externes(matrice,nbLignes,nbColonnes);
     int valid_interne = validation_interne(matrice,nbLignes,nbColonnes);

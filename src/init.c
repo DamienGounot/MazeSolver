@@ -10,7 +10,7 @@ LABYRINTHE init_labyrinthe(FILE* FIC,char* filename)
 
     if (FIC == NULL)
     {
-        printf("Erreur lors de l'ouverture\n");
+        printf("[DEBUG][init_labyrinthe]Erreur lors de l'ouverture\n");
         exit(EXIT_FAILURE);
     }
 
@@ -56,7 +56,7 @@ void remplissage_Map( LABYRINTHE labyrinthe, FILE* FIC,char* filename)
 
     if (FIC == NULL)
     {
-        printf("Erreur ouverture du fichier \n");
+        printf("[DEBUG][remplissage_Map]Erreur ouverture du fichier \n");
         exit(EXIT_FAILURE);
     }
 
@@ -65,8 +65,6 @@ void remplissage_Map( LABYRINTHE labyrinthe, FILE* FIC,char* filename)
         {
             c = fgetc(FIC);
         }
-        
-
             for (int i = 0; i < labyrinthe.nbLignes; i++)
             {
                 for (int j = 0; j < labyrinthe.nbColonnes; j++)
