@@ -3,15 +3,15 @@
 #include "../header/main.h"
 #include "../header/validation.h"
 #include "../header/init.h"
+#include "../header/creation.h"
 #include <time.h>
 
 FILE *creation_fichier(int nbLin, int nbCol, char *nom)
 {
     srand(time(NULL));
     FILE *fic = NULL;
-    int validationFichier;
-    int valeur;
-    unsigned short int matrice = init_matrice(nbLin, nbCol);
+    unsigned short int valeur;
+    unsigned short int** matrice = init_matrice(nbLin, nbCol);
     cassage_segments_externes(matrice,nbLin,nbCol);
     cassage_interne(matrice,nbLin,nbCol);
 
@@ -34,7 +34,7 @@ FILE *creation_fichier(int nbLin, int nbCol, char *nom)
                 for (int j = 0; j < nbCol; j++)
                 {
                     valeur = matrice[i][j];
-                    fprintf(fic,"%d ",valeur);
+                    fprintf(fic,"%hu ",valeur);
                 }
                 fprintf(fic,"\n");
             }
@@ -166,5 +166,42 @@ void cassage_segments_externes(unsigned short int** matrice,int nbLin,int nbCol)
 
 void cassage_interne(unsigned short int** matrice,int nbLin,int nbCol)
 {
+    int random_d,random_h,random_g,random_b;
 
+    for (int i = 1; i < nbLin-1; i++)
+    {
+        for (int j = 1; j < nbCol-1; j++)
+        {
+
+            random_d = rand()%4;
+            random_h = rand()%4;
+            random_g = rand()%4;
+            random_b = rand()%4;
+
+
+            if (!random_h)
+            {
+                matrice[i][j] = (matrice[i][j])^8; //mur haut case actuelle
+                matrice[i-1][j] = (matrice[i-1][j])^2; //mur bas case du haut
+            }
+
+            if (!random_d)
+            {
+                matrice[i][j] = (matrice[i][j])^4; //mur droit case actuelle
+                matrice[i][j+1] = (matrice[i][j+1])^1; //mur gauche case de droite
+            }
+
+            if (!random_b)
+            {
+                matrice[i][j] = (matrice[i][j])^2; //mur bas case actuelle
+                matrice[i+1][j] = (matrice[i+1][j])^8; //mur haut case du bas
+            }
+
+            if (!random_g)
+            {
+                matrice[i][j] = (matrice[i][j])^1; //mur gauche case actuelle
+                matrice[i][j-1] = (matrice[i][j-1])^4; //mur droit case de gauche
+            }
+        }   
+    }
 }

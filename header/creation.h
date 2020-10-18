@@ -2,7 +2,7 @@
 #define _CREATION_H_
 
 FILE* creation_fichier(int nbLin, int nbCol, char* nom);
-unsigned short int **init_matrice(int nbLignes, int nbColonnes);
+unsigned short int** init_matrice(int nbLignes, int nbColonnes);
 void cassage_interne(unsigned short int** matrice,int nbLin,int nbCol);
 void cassage_segments_externes(unsigned short int** matrice,int nbLin,int nbCol);
 void cassage_segment_haut(unsigned short int** matrice,int nbLin,int nbCol);
