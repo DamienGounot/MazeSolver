@@ -89,7 +89,25 @@ void cassage_segment_haut(unsigned short int** matrice,int nbLin,int nbCol)
 
 void cassage_segment_droite(unsigned short int** matrice,int nbLin,int nbCol)
 {
+        int random_g,random_b;
+    
+    for (int i = 0; i < nbLin-1; i++) // pour tout le segment de droite (sauf derniere case)
+    {
+        random_g = rand()%4;
+        random_b = rand()%4;
 
+        if (!random_g)
+        {
+            matrice[i][nbCol-1] = (matrice[i][nbCol-1])^1; // mur gauche case en cours
+            matrice[i][nbCol-2] = (matrice[i][nbCol-2])^4; // mur droit case de gauche
+        }
+
+        if (!random_b)
+        {
+            matrice[i][nbCol-1] = (matrice[i][nbCol-1])^2; // mur bas case en cours
+            matrice[i+1][nbCol-1] = (matrice[i+1][nbCol-1])^8; // mur haut case du bas
+        }
+    }
 }
 
 void cassage_segment_bas(unsigned short int** matrice,int nbLin,int nbCol)
