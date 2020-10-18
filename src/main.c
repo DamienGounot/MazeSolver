@@ -73,7 +73,7 @@ if (argv[1]) // si on passe en paramettre un fichier
 
 LABYRINTHE labyrinthe = init_labyrinthe(fichier,filename);  // allocation et init du labyrinthe
 remplissage_Map(labyrinthe,fichier,filename);
+affichage_labyrinthe(labyrinthe);
 
- 
     return EXIT_SUCCESS;
 }
