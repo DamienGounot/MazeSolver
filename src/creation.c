@@ -73,13 +73,13 @@ void cassage_segment_haut(unsigned short int** matrice,int nbLin,int nbCol)
         random_d = rand()%4;
         random_b = rand()%4;
 
-        if (!random_d) // proba de 75% de casser le mur 
+        if (random_d>0) // proba de 75% de casser le mur 
         {
             matrice[0][i] = (matrice[0][i])^4; // mur droite case en cours
             matrice[0][i+1] = (matrice[0][i+1])^1; // mur gauche case de droite
         }
         
-        if (!random_b)// proba de 75% de casser le mur 
+        if (random_b>0)// proba de 75% de casser le mur 
         {
             matrice[0][i] = (matrice[0][i])^2; // mur bas case en cours
             matrice[1][i] = (matrice[1][i])^8; // mur haut case du bas
@@ -96,13 +96,13 @@ void cassage_segment_droite(unsigned short int** matrice,int nbLin,int nbCol)
         random_g = rand()%4;
         random_b = rand()%4;
 
-        if (!random_g)
+        if (random_g>0)
         {
             matrice[i][nbCol-1] = (matrice[i][nbCol-1])^1; // mur gauche case en cours
             matrice[i][nbCol-2] = (matrice[i][nbCol-2])^4; // mur droit case de gauche
         }
 
-        if (!random_b)
+        if (random_b>0)
         {
             matrice[i][nbCol-1] = (matrice[i][nbCol-1])^2; // mur bas case en cours
             matrice[i+1][nbCol-1] = (matrice[i+1][nbCol-1])^8; // mur haut case du bas
@@ -119,13 +119,13 @@ void cassage_segment_bas(unsigned short int** matrice,int nbLin,int nbCol)
         random_g = rand()%4;
         random_h = rand()%4;
 
-        if (!random_g)
+        if (random_g>0)
         {
             matrice[nbLin-1][i] = (matrice[nbLin-1][i])^1; // mur gauche case en cours
             matrice[nbLin-1][i-1] = (matrice[nbLin-1][i-1])^4; // mur droit case de gauche
         }
         
-        if (!random_h)
+        if (random_h>0)
         {
             matrice[nbLin-1][i] = (matrice[nbLin-1][i])^8; // mur haut case en cours
             matrice[nbLin-2][i] = (matrice[nbLin-2][i])^2; // mur bas case du haut
@@ -142,13 +142,13 @@ void cassage_segment_gauche(unsigned short int** matrice,int nbLin,int nbCol)
         random_d = rand()%4;
         random_h = rand()%4;
 
-        if (!random_d)
+        if (random_d>0)
         {
             matrice[i][0] = (matrice[i][0])^4; // mur droit case en cours
             matrice[i][1] = (matrice[i][1])^1; // mur gauche case de droite            
         }
 
-        if (!random_h)
+        if (random_h>0)
         {
         matrice[i][0] = (matrice[i][0])^8; // mur haut case en cours
         matrice[i-1][0] = (matrice[i-1][0])^2; // mur bas case du haut
@@ -179,25 +179,25 @@ void cassage_interne(unsigned short int** matrice,int nbLin,int nbCol)
             random_b = rand()%4;
 
 
-            if (!random_h)
+            if (random_h>0)
             {
                 matrice[i][j] = (matrice[i][j])^8; //mur haut case actuelle
                 matrice[i-1][j] = (matrice[i-1][j])^2; //mur bas case du haut
             }
 
-            if (!random_d)
+            if (random_d>0)
             {
                 matrice[i][j] = (matrice[i][j])^4; //mur droit case actuelle
                 matrice[i][j+1] = (matrice[i][j+1])^1; //mur gauche case de droite
             }
 
-            if (!random_b)
+            if (random_b>0)
             {
                 matrice[i][j] = (matrice[i][j])^2; //mur bas case actuelle
                 matrice[i+1][j] = (matrice[i+1][j])^8; //mur haut case du bas
             }
 
-            if (!random_g)
+            if (random_g>0)
             {
                 matrice[i][j] = (matrice[i][j])^1; //mur gauche case actuelle
                 matrice[i][j-1] = (matrice[i][j-1])^4; //mur droit case de gauche

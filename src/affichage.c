@@ -3,113 +3,143 @@
 #include "../header/main.h"
 #include "../header/affichage.h"
 
-void display_menu(char* nom_fichier)
+void display_menu(char *nom_fichier)
 {
-    FILE* menu = NULL;
-	char caract;
+    FILE *menu = NULL;
+    char caract;
 
-	menu = fopen(nom_fichier, "r");
-        if (menu == NULL)
-        {
-            printf("[DEBUG][display_menu] Pas de menu ! \n");
+    menu = fopen(nom_fichier, "r");
+    if (menu == NULL)
+    {
+        printf("[DEBUG][display_menu] Pas de menu ! \n");
         exit(-1);
-        }
-        system("clear");
-        while (caract != EOF)
-        {
-            caract = fgetc(menu);
-            printf("%c",caract);
-        }
-	fclose(menu);
+    }
+    system("clear");
+    while (caract != EOF)
+    {
+        caract = fgetc(menu);
+        printf("%c", caract);
+    }
+    fclose(menu);
 }
 
 void affiche_u_int16_t(unsigned short int element)
 {
-    printf("Valeur u_int16_t de %d: ",element);
+    printf("Valeur u_int16_t de %d: ", element);
 
-    for (int k = 15; k >= 0; k--) 
+    for (int k = 15; k >= 0; k--)
     {
-        printf("%c",(element>>k)&1?'1':'0');
+        printf("%c", (element >> k) & 1 ? '1' : '0');
     }
     printf("\n");
 }
 
 void affichage_labyrinthe(LABYRINTHE labyrinthe)
 {
-    int valeur;
+    int bit3, bit2, bit1, bit0;
 
     for (int i = 0; i < labyrinthe.nbLignes; i++)
     {
-        for (int j = 0; j < labyrinthe.nbColonnes; j++)
+        for (int k = 0; k < 3; k++) // boucle de 3 pour le print de chaque case
         {
-            valeur = get_case_value(labyrinthe.map[i][j]);
-
-            switch (valeur)
+            for (int j = 0; j < labyrinthe.nbColonnes; j++)
             {
-            case 0:
-                   
-                break;
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            case 4:
-                
-                break;
-            case 5:
-                
-                break;
-            case 6:
-                
-                break;
-            case 7:
-                
-                break;
-            case 8:
-                
-                break;
-            case 9:
-                
-                break;
-            case 10:
-                
-                break;
-            case 11:
-                
-                break; 
-            case 12:
-                
-                break; 
-            case 13:
-                
-                break; 
-            case 14:
-                
-                break; 
-            case 15:
-                
-                break;                                                                                                                                                                                                                                             
-            default:
-                break;
+                bit3 = get_bit3_value(labyrinthe.map[i][j]);
+                bit2 = get_bit2_value(labyrinthe.map[i][j]);
+                bit1 = get_bit1_value(labyrinthe.map[i][j]);
+                bit0 = get_bit0_value(labyrinthe.map[i][j]);
+
+                switch (k)
+                {
+                case 0: // print premiere ligne de la case
+                    if (bit3)
+                    {
+                        printf("┌─┐");
+                    }
+                    else
+                    {
+                        printf("┌ ┐");
+                    }
+                    break;
+                case 1: // print deuxieme ligne de la case
+                    if (bit0 == 0 && bit2 == 0)
+                    {
+                        printf("   ");
+                    }
+                    if (bit0 == 0 && bit2 == 1)
+                    {
+                        printf("  │");
+                    }
+                    if (bit0 == 1 && bit2 == 0)
+                    {
+                        printf("│  ");
+                    }
+                    if (bit0 == 1 && bit2 == 1)
+                    {
+                        printf("│ │");
+                    }
+                    break;
+                case 2: // print troisieme ligne de la case
+                    if (bit1)
+                    {
+                        printf("└─┘");
+                    }
+                    else
+                    {
+                        printf("└ ┘");
+                    }
+                    break;
+                default:
+                    break;
+                }
             }
+            printf("\n");
         }
-        printf("\n");        
     }
 }
 
 int get_case_value(unsigned short int carre)
 {
-    int bit3,bit2,bit1,bit0,result;
-    bit3 = (carre>>3)&1;
-    bit2 = (carre>>2)&1;
-    bit1 = (carre>>1)&1;
-    bit0 = (carre>>0)&1;
-    result = ((bit3*8) + (bit2*4) + (bit1*2) + bit0);
+    int bit3, bit2, bit1, bit0, result;
+    bit3 = (carre >> 3) & 1;
+    bit2 = (carre >> 2) & 1;
+    bit1 = (carre >> 1) & 1;
+    bit0 = (carre >> 0) & 1;
+    result = ((bit3 * 8) + (bit2 * 4) + (bit1 * 2) + bit0);
     //printf("[DEBUG][get_case_value] valeur des bits de la case: %d\n",result);
     return result;
+}
+
+int get_bit3_value(unsigned short int carre)
+{
+    int bit3;
+    bit3 = (carre >> 3) & 1;
+
+    //printf("[DEBUG][get_b3_value] valeur de bit3: %d\n",bit3);
+    return bit3;
+}
+
+int get_bit2_value(unsigned short int carre)
+{
+    int bit2;
+    bit2 = (carre >> 2) & 1;
+
+    //printf("[DEBUG][get_b2_value] valeur de bit2: %d\n",bit2);
+    return bit2;
+}
+
+int get_bit1_value(unsigned short int carre)
+{
+    int bit1;
+    bit1 = (carre >> 1) & 1;
+    //printf("[DEBUG][get_bit1_value] valeur de bit1: %d\n",bit1);
+    return bit1;
+}
+
+int get_bit0_value(unsigned short int carre)
+{
+    int bit0;
+    bit0 = (carre >> 0) & 1;
+    //printf("[DEBUG][get_bit0_value] valeur de bit0: %d\n",bit0);
+    return bit0;
 }
