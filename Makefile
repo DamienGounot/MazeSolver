@@ -1,4 +1,4 @@
-all : CLEAR COMP CLEAR
+all : CLEAR COMP CLEAR LAUNCH
 
 CLEAR:
 	clear
@@ -28,4 +28,4 @@ NETTOYAGE :
 	rm ./obj/*.o
 
 LAUNCH :
-	-./COMP map.txt
+	-./COMP
