@@ -6,6 +6,7 @@
 #include "../header/affichage.h"
 #include "../header/validation.h"
 #include "../header/creation.h"
+#include "../header/recherche.h"
 
 int main(int argc, char** argv){
 srand(time(NULL));
@@ -16,9 +17,10 @@ int nbCol = 0;
 char* filename;
 int validationFichier;
 FILE* fichier = NULL;
+    debug_mode(argv,argc);
 
 if (argv[1]) // si on passe en paramettre un fichier 
-{
+{ 
     filename = argv[1];
     validationFichier = validation_fichier(fichier,filename); // on le test
 }else
@@ -74,6 +76,7 @@ if (argv[1]) // si on passe en paramettre un fichier
 LABYRINTHE labyrinthe = init_labyrinthe(fichier,filename);  // allocation et init du labyrinthe
 remplissage_Map(labyrinthe,fichier,filename);
 affichage_labyrinthe(labyrinthe);
+
 
     return EXIT_SUCCESS;
 }

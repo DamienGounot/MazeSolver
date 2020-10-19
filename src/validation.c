@@ -66,13 +66,13 @@ int validation_interne(unsigned short int** matrice,int nbLin,int nbCol)
             
             if ((case_h != case_haut_b) || (case_b != case_bas_h) || (case_d != case_droite_g) || (case_g != case_gauche_d))
             {
-                printf("[Debug][validation_interne] interne non validé, case (%d:%d)\n",i,j);
+                if(debug)    printf("[Debug][validation_interne] interne non validé, case (%d:%d)\n",i,j);
                 return 0;
             }
    
         }   
     }
-        printf("[Debug][validation_interne] cases internes validées\n");
+    if(debug)    printf("[Debug][validation_interne] cases internes validées\n");
         return 1;  
 }
 
@@ -99,11 +99,11 @@ int validation_segment_haut(unsigned short int** matrice,int nbLin,int nbCol)
 
         if ((case_d != case_droite_g)||(case_b != case_bas_h))
         {
-            printf("[Debug][validation_segment_haut] segment haut non valide, case (0:%d)\n",i);
+            if(debug)    printf("[Debug][validation_segment_haut] segment haut non valide, case (0:%d)\n",i);
             return 0;
         }   
     }
-    printf("[Debug][validation_segment_haut] segment haut valide\n");
+        if(debug) printf("[Debug][validation_segment_haut] segment haut valide\n");
     return 1;
 }
 int validation_segment_droite(unsigned short int** matrice,int nbLin,int nbCol)
@@ -119,11 +119,11 @@ int validation_segment_droite(unsigned short int** matrice,int nbLin,int nbCol)
 
         if ((case_g != case_gauche_d)||(case_b != case_bas_h))
         {
-            printf("[Debug][validation_segment_droite] segment droite non valide, case (%d:%d)\n",i,nbCol-1);
+            if(debug) printf("[Debug][validation_segment_droite] segment droite non valide, case (%d:%d)\n",i,nbCol-1);
             return 0;
         }   
     }
-    printf("[Debug][validation_segment_droite] segment droite valide\n");
+    if(debug) printf("[Debug][validation_segment_droite] segment droite valide\n");
     return 1;
 }
 int validation_segment_bas(unsigned short int** matrice,int nbLin,int nbCol)
@@ -139,11 +139,11 @@ int validation_segment_bas(unsigned short int** matrice,int nbLin,int nbCol)
         
         if ((case_g != case_gauche_d)||(case_h != case_haut_b))
         {
-            printf("[Debug][validation_segment_bas] segment bas non valide, case (%d:%d)\n",nbLin-1,i);
+            if(debug) printf("[Debug][validation_segment_bas] segment bas non valide, case (%d:%d)\n",nbLin-1,i);
             return 0;
         }   
     }
-    printf("[Debug][validation_segment_bas] segment bas valide\n");
+    if(debug) printf("[Debug][validation_segment_bas] segment bas valide\n");
     return 1;    
 }
 int validation_segment_gauche(unsigned short int** matrice,int nbLin,int nbCol)
@@ -158,11 +158,11 @@ int validation_segment_gauche(unsigned short int** matrice,int nbLin,int nbCol)
          case_haut_b = (matrice[i-1][0]>>1)&1; // mur bas case du haut
         if ((case_d != case_droite_g)||(case_h != case_haut_b))
         {
-            printf("[Debug][validation_segment_gauche] segment gauche non valide, case (%d:%d)\n",i,0);
+            if(debug) printf("[Debug][validation_segment_gauche] segment gauche non valide, case (%d:%d)\n",i,0);
             return 0;
         }   
     }
-    printf("[Debug][validation_segment_gauche] segment gauche valide\n");
+    if(debug) printf("[Debug][validation_segment_gauche] segment gauche valide\n");
     return 1;   
 }
 
@@ -186,11 +186,11 @@ int validation_mur_haut(unsigned short int** matrice,int nbCol)
 
         if (!bit3)
         {
-            printf("[Debug][validation_mur_haut] La case (0:%d) possède b3 a 0\n",i);
+            if(debug) printf("[Debug][validation_mur_haut] La case (0:%d) possède b3 a 0\n",i);
             return 0;
         }                  
     }
-    printf("[Debug][validation_mur_haut] Mur haut valide\n");
+    if(debug) printf("[Debug][validation_mur_haut] Mur haut valide\n");
     return 1;
 }
 int validation_mur_bas(unsigned short int** matrice,int nbLin,int nbCol)
@@ -203,11 +203,11 @@ int validation_mur_bas(unsigned short int** matrice,int nbLin,int nbCol)
 
         if (!bit1)
         {
-            printf("[Debug][validation_mur_bas] La case (%d:%d) possède b1 a 0\n",nbLin-1,i);
+            if(debug) printf("[Debug][validation_mur_bas] La case (%d:%d) possède b1 a 0\n",nbLin-1,i);
             return 0;
         }                  
     }
-    printf("[Debug][validation_mur_bas] Mur bas valide\n");
+    if(debug) printf("[Debug][validation_mur_bas] Mur bas valide\n");
     return 1;
 }
 int validation_mur_gauche(unsigned short int** matrice,int nbLin,int nbCol)
@@ -220,11 +220,11 @@ int validation_mur_gauche(unsigned short int** matrice,int nbLin,int nbCol)
 
         if (!bit0)
         {
-            printf("[Debug][validation_mur_gauche] La case (%d:0) possède b0 a 0\n",i);
+            if(debug) printf("[Debug][validation_mur_gauche] La case (%d:0) possède b0 a 0\n",i);
             return 0;
         }                  
     }
-    printf("[Debug][validation_mur_gauche] Mur gauche valide\n");
+    if(debug) printf("[Debug][validation_mur_gauche] Mur gauche valide\n");
     return 1;
 }
 int validation_mur_droite(unsigned short int** matrice,int nbLin,int nbCol)
@@ -237,10 +237,10 @@ int validation_mur_droite(unsigned short int** matrice,int nbLin,int nbCol)
 
         if (!bit2)
         {
-            printf("[Debug][validation_mur_droite] La case (%d:%d) possède b2 a 0\n",i,nbCol-1);
+            if(debug) printf("[Debug][validation_mur_droite] La case (%d:%d) possède b2 a 0\n",i,nbCol-1);
             return 0;
         }                  
     }
-    printf("[Debug][validation_mur_droite] Mur droite valide\n");
+    if(debug) printf("[Debug][validation_mur_droite] Mur droite valide\n");
     return 1;
 }

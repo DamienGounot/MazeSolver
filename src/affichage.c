@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../header/main.h"
 #include "../header/affichage.h"
+#include <string.h>
 
 void display_menu(char *nom_fichier)
 {
@@ -11,7 +12,7 @@ void display_menu(char *nom_fichier)
     menu = fopen(nom_fichier, "r");
     if (menu == NULL)
     {
-        printf("[DEBUG][display_menu] Pas de menu ! \n");
+       if(debug) printf("[DEBUG][display_menu] Pas de menu ! \n");
         exit(-1);
     }
     system("clear");
@@ -54,11 +55,11 @@ void affichage_labyrinthe(LABYRINTHE labyrinthe)
                 case 0: // print premiere ligne de la case
                     if (bit3)
                     {
-                        printf("┌─┐");
+                        printf("╬═╬");
                     }
                     else
                     {
-                        printf("┌ ┐");
+                        printf("╬ ╬");
                     }
                     break;
                 case 1: // print deuxieme ligne de la case
@@ -68,25 +69,25 @@ void affichage_labyrinthe(LABYRINTHE labyrinthe)
                     }
                     if (bit0 == 0 && bit2 == 1)
                     {
-                        printf("  │");
+                        printf("  ║");
                     }
                     if (bit0 == 1 && bit2 == 0)
                     {
-                        printf("│  ");
+                        printf("║  ");
                     }
                     if (bit0 == 1 && bit2 == 1)
                     {
-                        printf("│ │");
+                        printf("║ ║");
                     }
                     break;
                 case 2: // print troisieme ligne de la case
                     if (bit1)
                     {
-                        printf("└─┘");
+                        printf("╬═╬");
                     }
                     else
                     {
-                        printf("└ ┘");
+                        printf("╬ ╬");
                     }
                     break;
                 default:
@@ -106,7 +107,7 @@ int get_case_value(unsigned short int carre)
     bit1 = (carre >> 1) & 1;
     bit0 = (carre >> 0) & 1;
     result = ((bit3 * 8) + (bit2 * 4) + (bit1 * 2) + bit0);
-    //printf("[DEBUG][get_case_value] valeur des bits de la case: %d\n",result);
+    //if(debug) printf("[DEBUG][get_case_value] valeur des bits de la case: %d\n",result);
     return result;
 }
 
@@ -115,7 +116,7 @@ int get_bit3_value(unsigned short int carre)
     int bit3;
     bit3 = (carre >> 3) & 1;
 
-    //printf("[DEBUG][get_b3_value] valeur de bit3: %d\n",bit3);
+    //if(debug) printf("[DEBUG][get_b3_value] valeur de bit3: %d\n",bit3);
     return bit3;
 }
 
@@ -124,7 +125,7 @@ int get_bit2_value(unsigned short int carre)
     int bit2;
     bit2 = (carre >> 2) & 1;
 
-    //printf("[DEBUG][get_b2_value] valeur de bit2: %d\n",bit2);
+    //if(debug) printf("[DEBUG][get_b2_value] valeur de bit2: %d\n",bit2);
     return bit2;
 }
 
@@ -132,7 +133,7 @@ int get_bit1_value(unsigned short int carre)
 {
     int bit1;
     bit1 = (carre >> 1) & 1;
-    //printf("[DEBUG][get_bit1_value] valeur de bit1: %d\n",bit1);
+    //if(debug) printf("[DEBUG][get_bit1_value] valeur de bit1: %d\n",bit1);
     return bit1;
 }
 
@@ -140,6 +141,17 @@ int get_bit0_value(unsigned short int carre)
 {
     int bit0;
     bit0 = (carre >> 0) & 1;
-    //printf("[DEBUG][get_bit0_value] valeur de bit0: %d\n",bit0);
+    //if(debug) printf("[DEBUG][get_bit0_value] valeur de bit0: %d\n",bit0);
     return bit0;
+}
+
+void debug_mode(char** argv,int argc)
+{
+    for (int i = 0; i < argc; i++)
+    {
+        if(!strcmp(argv[i], "debug"))
+        {
+            debug = 1;
+        }
+    }
 }
