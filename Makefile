@@ -1,4 +1,4 @@
-all : CLEAR COMP
+all : CLEAR COMP CLEAR LAUNCH
 
 CLEAR:
 	clear
@@ -18,11 +18,14 @@ creation.o :
 validation.o : 
 	gcc -c ./src/validation.c  -o ./obj/validation.o -Wall
 
-COMP : main.o init.o affichage.o validation.o creation.o
-	gcc -o COMP ./obj/main.o ./obj/init.o ./obj/affichage.o ./obj/validation.o ./obj/creation.o -Wall
+recherche.o : 
+	gcc -c ./src/recherche.c  -o ./obj/recherche.o -Wall
+
+COMP : main.o init.o affichage.o validation.o creation.o recherche.o
+	gcc -o COMP ./obj/main.o ./obj/init.o ./obj/affichage.o ./obj/validation.o ./obj/creation.o ./obj/recherche.o -Wall
 
 NETTOYAGE : 
 	rm ./obj/*.o
 
 LAUNCH :
-	-./COMP map.txt
+	-./COMP

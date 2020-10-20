@@ -15,5 +15,7 @@ typedef struct labyrinthe
 
 }LABYRINTHE;
 
+int debug;
+
 
 #endif
