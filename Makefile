@@ -1,4 +1,4 @@
-all : CLEAR COMP CLEAR LAUNCH
+all : CLEAR COMP
 
 CLEAR:
 	clear

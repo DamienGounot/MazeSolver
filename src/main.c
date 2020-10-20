@@ -16,6 +16,7 @@ int nbLin = 0;
 int nbCol = 0;
 char* filename;
 int validationFichier;
+int resolution;
 FILE* fichier = NULL;
     debug_mode(argv,argc);
 
@@ -76,6 +77,8 @@ system("clear");
 LABYRINTHE labyrinthe = init_labyrinthe(fichier,filename);  // allocation et init du labyrinthe
 remplissage_Map(labyrinthe,fichier,filename);
 affichage_labyrinthe(labyrinthe);
+resolution = IA(labyrinthe);
+
 
 
     return EXIT_SUCCESS;
