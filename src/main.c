@@ -77,7 +77,12 @@ system("clear");
 LABYRINTHE labyrinthe = init_labyrinthe(fichier,filename);  // allocation et init du labyrinthe
 remplissage_Map(labyrinthe,fichier,filename);
 affichage_labyrinthe(labyrinthe);
-resolution = IA(labyrinthe);
+    do
+    {
+    resolution = IA(labyrinthe);
+    } while (!resolution);
+
+
 
 
 
