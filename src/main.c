@@ -76,7 +76,7 @@ system("clear");
 LABYRINTHE labyrinthe = init_labyrinthe(fichier,filename);  // allocation et init du labyrinthe
 remplissage_Map(labyrinthe,fichier,filename);
 affichage_labyrinthe(labyrinthe);
-IA(labyrinthe);
+IA(&labyrinthe);
 
     return EXIT_SUCCESS;
 }
