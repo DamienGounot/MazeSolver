@@ -5,21 +5,21 @@
 #include "../header/affichage.h"
 #include <time.h>
 
-int IA(LABYRINTHE labyrinthe)
+void IA(LABYRINTHE labyrinthe)
 {
     srand(time(NULL));
     int piege = 0;
     int next_direction;
     int mur_value, mur_invisible_value, next_case_mur_invisible_value;
+    int win = 0;
 
     piege = est_piege(labyrinthe.map, labyrinthe.IA_x, labyrinthe.IA_y);
-    if (piege)
-    {
-        return 0;
-    }
 
-    do
+    
+
+    while (!win && !piege)
     {
+        win = check_win(labyrinthe.IA_x,labyrinthe.IA_y,labyrinthe.sortie_x,labyrinthe.sortie_y);
         next_direction = rand() % 4; // 0 pour Gauche, 1 pour Bas, 2 pour Droite, 3 pour Haut
         mur_value = get_mur_value(labyrinthe.map, labyrinthe.IA_x, labyrinthe.IA_y, next_direction);
 
@@ -47,8 +47,8 @@ int IA(LABYRINTHE labyrinthe)
                 }
             }
         }
-    } while (1);
-    return 1;
+    }
+
 }
 
 int get_mur_value(unsigned short int **map, int IA_x, int IA_y, int direction) // 0 pour Gauche, 1 pour Bas, 2 pour Droite, 3 pour Haut
@@ -217,4 +217,18 @@ int check_cul_de_sac(unsigned short int **map, int IA_x, int IA_y, int direction
     }
     
 
+}
+
+int check_win(int IA_x, int IA_y,int sortie_x, int sortie_y)
+{
+    if (IA_x == sortie_x && IA_y == sortie_y)
+    {
+    printf("[DEBUG][check_win] win at (%d,%d)\n", IA_x, IA_y);
+        return 1;
+    }else
+    {
+        printf("[DEBUG][check_win] not win at (%d,%d)\n", IA_x, IA_y);
+        return 0;
+    }
+    
 }
