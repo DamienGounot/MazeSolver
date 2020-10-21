@@ -15,6 +15,11 @@ void IA(LABYRINTHE* labyrinthe)
     int is_double;
 
     piege = est_piege(labyrinthe);
+    if (piege)
+    {
+        printf("Spawn piégé at (%d;%d) !\n",labyrinthe->IA_x,labyrinthe->IA_y);
+    }
+    
 
     
 
@@ -22,11 +27,13 @@ void IA(LABYRINTHE* labyrinthe)
     {
         win = check_win(labyrinthe);
         if (win)
-        {
+        {   
+            reset_cursor(labyrinthe);
             printf("Win at (%d;%d) !\n",labyrinthe->IA_x,labyrinthe->IA_y);
             break;
         }
-        
+        print_Entree__Sortie(labyrinthe);
+        update_Path(labyrinthe);
         next_direction = rand() % 4; // 0 pour Gauche, 1 pour Bas, 2 pour Droite, 3 pour Haut
         if(debug) printf("Rand next direction: %d\n",next_direction);
         mur_value = get_mur_value(labyrinthe, next_direction);
@@ -68,6 +75,7 @@ void IA(LABYRINTHE* labyrinthe)
                     int cul_de_sac = check_cul_de_sac(labyrinthe);
                     if (cul_de_sac == 4)
                     { // si on est bloqué
+                    reset_cursor(labyrinthe);
                     printf("Bloqué ! Fin de simulation ! \n");
                     piege = 1; 
                     }

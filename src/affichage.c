@@ -155,3 +155,21 @@ void debug_mode(char** argv,int argc)
         }
     }
 }
+void print_Entree__Sortie(LABYRINTHE* labyrinthe)
+{
+    printf("\033[%d;%dH",2+labyrinthe->entree_x*3,2+labyrinthe->entree_y*3);
+    printf("E");
+    printf("\033[%d;%dH",2+labyrinthe->sortie_x*3,2+labyrinthe->sortie_y*3);
+    printf("S");
+}
+void update_Path(LABYRINTHE* labyrinthe)
+{
+    printf("\033[%d;%dH",2+labyrinthe->IA_x*3,2+labyrinthe->IA_y*3);
+    printf("X");
+}
+
+void reset_cursor(LABYRINTHE* labyrinthe)
+{
+    printf("\033[%d;%dH",4+labyrinthe->nbLignes*3,4+labyrinthe->nbColonnes*3);
+}
+
