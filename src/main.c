@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "../header/main.h"
 #include "../header/init.h"
 #include "../header/affichage.h"
@@ -19,7 +20,7 @@ int validationFichier;
 FILE* fichier = NULL;
     debug_mode(argv,argc);
 
-if (argv[1]) // si on passe en paramettre un fichier 
+if (argv[1] && strcmp(argv[1],"debug")) // si on passe en paramettre un fichier 
 { 
     filename = argv[1];
     validationFichier = validation_fichier(fichier,filename); // on le test

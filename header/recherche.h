@@ -12,4 +12,5 @@ int check_cul_de_sac(LABYRINTHE* labyrinthe);
 int check_win(LABYRINTHE* labyrinthe);
 int check_double_wall(LABYRINTHE* labyrinthe, int direction);
 int check_wall(LABYRINTHE* labyrinthe, int direction);
+void kill_boucle(LABYRINTHE* labyrinthe,int direction);
 #endif

@@ -4,6 +4,7 @@
 #include "../header/recherche.h"
 #include "../header/affichage.h"
 #include <time.h>
+#include <unistd.h>
 
 void IA(LABYRINTHE* labyrinthe)
 {
@@ -12,11 +13,13 @@ void IA(LABYRINTHE* labyrinthe)
     int next_direction;
     int mur_value, next_case_mur_invisible_value;//,mur_invisible_value;
     int win = 0;
-    int is_double;
+    int is_double,is_boucle;
 
     piege = est_piege(labyrinthe);
     if (piege)
     {
+        print_Entree__Sortie(labyrinthe);
+        reset_cursor(labyrinthe);
         printf("Spawn piégé at (%d;%d) !\n",labyrinthe->IA_x,labyrinthe->IA_y);
     }
     
@@ -28,12 +31,11 @@ void IA(LABYRINTHE* labyrinthe)
         win = check_win(labyrinthe);
         if (win)
         {   
+            print_Entree__Sortie(labyrinthe);
             reset_cursor(labyrinthe);
             printf("Win at (%d;%d) !\n",labyrinthe->IA_x,labyrinthe->IA_y);
             break;
         }
-        print_Entree__Sortie(labyrinthe);
-        update_Path(labyrinthe);
         next_direction = rand() % 4; // 0 pour Gauche, 1 pour Bas, 2 pour Droite, 3 pour Haut
         if(debug) printf("Rand next direction: %d\n",next_direction);
         mur_value = get_mur_value(labyrinthe, next_direction);
@@ -50,7 +52,9 @@ void IA(LABYRINTHE* labyrinthe)
                 poser_mur_invisible(labyrinthe, next_direction);
                 // on pose un mur invisible sur notre case
                 move_IA(labyrinthe, next_direction);
+                update_Path(labyrinthe);
                 // on bouge a l'autre case
+                    
             }
             else
             {
@@ -68,13 +72,16 @@ void IA(LABYRINTHE* labyrinthe)
                     { // si impasse, on pose un mur invisible et on bouge
                         poser_mur_invisible(labyrinthe, next_direction);
                         move_IA(labyrinthe, next_direction);
+                        update_Path(labyrinthe);
                     }
                 }
                 else
                 {
+                    
                     int cul_de_sac = check_cul_de_sac(labyrinthe);
                     if (cul_de_sac == 4)
                     { // si on est bloqué
+                    print_Entree__Sortie(labyrinthe);
                     reset_cursor(labyrinthe);
                     printf("Bloqué ! Fin de simulation ! \n");
                     piege = 1; 
@@ -84,7 +91,6 @@ void IA(LABYRINTHE* labyrinthe)
             }
         }
     }
-
 }
 
 int get_mur_value(LABYRINTHE* labyrinthe, int direction) // 0 pour Gauche, 1 pour Bas, 2 pour Droite, 3 pour Haut

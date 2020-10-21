@@ -37,6 +37,7 @@ void affiche_u_int16_t(unsigned short int element)
 
 void affichage_labyrinthe(LABYRINTHE labyrinthe)
 {
+    couleur("31");
     int bit3, bit2, bit1, bit0;
 
     for (int i = 0; i < labyrinthe.nbLignes; i++)
@@ -97,6 +98,7 @@ void affichage_labyrinthe(LABYRINTHE labyrinthe)
             printf("\n");
         }
     }
+    couleur("0");
 }
 
 int get_case_value(unsigned short int carre)
@@ -157,19 +159,23 @@ void debug_mode(char** argv,int argc)
 }
 void print_Entree__Sortie(LABYRINTHE* labyrinthe)
 {
+    couleur("36");
     printf("\033[%d;%dH",2+labyrinthe->entree_x*3,2+labyrinthe->entree_y*3);
-    printf("E");
-    printf("\033[%d;%dH",2+labyrinthe->sortie_x*3,2+labyrinthe->sortie_y*3);
     printf("S");
+    printf("\033[%d;%dH",2+labyrinthe->sortie_x*3,2+labyrinthe->sortie_y*3);
+    printf("E");
+    couleur("0");
 }
 void update_Path(LABYRINTHE* labyrinthe)
 {
+    couleur("33");
     printf("\033[%d;%dH",2+labyrinthe->IA_x*3,2+labyrinthe->IA_y*3);
-    printf("X");
+    printf("*");
+    couleur("0");
 }
 
 void reset_cursor(LABYRINTHE* labyrinthe)
 {
-    printf("\033[%d;%dH",4+labyrinthe->nbLignes*3,4+labyrinthe->nbColonnes*3);
+    printf("\033[%d;%dH",4+labyrinthe->nbLignes*3,0);
 }
 
