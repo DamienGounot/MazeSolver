@@ -76,7 +76,9 @@ system("clear");
 LABYRINTHE labyrinthe = init_labyrinthe(fichier,filename);  // allocation et init du labyrinthe
 remplissage_Map(labyrinthe,fichier,filename);
 affichage_labyrinthe(labyrinthe);
-
-
+printf("Simulation Launch !\n");
+printf("Spawn at (%d;%d)\n",labyrinthe.IA_x,labyrinthe.IA_y);
+printf("Exit is (%d;%d)\n",labyrinthe.sortie_x,labyrinthe.sortie_y);
+IA(&labyrinthe);
     return EXIT_SUCCESS;
 }

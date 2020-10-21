@@ -25,8 +25,8 @@ LABYRINTHE init_labyrinthe(FILE* FIC,char* filename)
     labyrinthe.entree_y = entreeY;
     labyrinthe.sortie_x = sortieX;
     labyrinthe.sortie_y = sortieY;
-    labyrinthe.IA_x = entreeX;
-    labyrinthe.IA_y = entreeY;
+    labyrinthe.IA_x = labyrinthe.entree_x;
+    labyrinthe.IA_y = labyrinthe.entree_y;
     
     for (int i = 0; i < nbLignes; i++)
     {
