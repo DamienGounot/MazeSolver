@@ -12,6 +12,7 @@ void IA(LABYRINTHE* labyrinthe)
     int next_direction;
     int mur_value, next_case_mur_invisible_value;//,mur_invisible_value;
     int win = 0;
+    int is_double;
 
     piege = est_piege(labyrinthe);
 
@@ -22,6 +23,7 @@ void IA(LABYRINTHE* labyrinthe)
         win = check_win(labyrinthe);
         if (win)
         {
+            printf("Win at (%d;%d) !\n",labyrinthe->IA_x,labyrinthe->IA_y);
             break;
         }
         
@@ -46,19 +48,31 @@ void IA(LABYRINTHE* labyrinthe)
             else
             {
                 // si mur invisible sur l'autre case (on est déjà passé par là)
-                //on regarde si on est dans un cul de sac
+                // vérifier si le mur est potentiellement traversable (pas double)
+                is_double = check_double_wall(labyrinthe,next_direction);
+
+                if (!is_double)
+                {
+                    // si le mur n'est pas double
+                    //on regarde si on est dans un cul de sac
                 
-                int cul_de_sac = check_cul_de_sac(labyrinthe,next_direction);
-                if (cul_de_sac == 3)
-                { // si impasse, on pose un mur invisible et on bouge
-                    poser_mur_invisible(labyrinthe, next_direction);
-                    move_IA(labyrinthe, next_direction);
+                    int cul_de_sac = check_cul_de_sac(labyrinthe);
+                    if (cul_de_sac == 3)
+                    { // si impasse, on pose un mur invisible et on bouge
+                        poser_mur_invisible(labyrinthe, next_direction);
+                        move_IA(labyrinthe, next_direction);
+                    }
                 }
-                if (cul_de_sac == 4)
-                { // si on est bloqué
-                printf("Bloqué ! Fin de simulation ! \n");
-                  exit(EXIT_SUCCESS);  
+                else
+                {
+                    int cul_de_sac = check_cul_de_sac(labyrinthe);
+                    if (cul_de_sac == 4)
+                    { // si on est bloqué
+                    printf("Bloqué ! Fin de simulation ! \n");
+                    piege = 1; 
+                    }
                 }
+                
             }
         }
     }
@@ -165,17 +179,15 @@ void move_IA(LABYRINTHE* labyrinthe, int direction)
 }
 
 
-int check_cul_de_sac(LABYRINTHE* labyrinthe, int direction)
+int check_cul_de_sac(LABYRINTHE* labyrinthe)
 {
     int w_haut = 0, w_bas = 0, w_gauche = 0, w_droite = 0;
     int dw_haut = 0, dw_bas = 0, dw_gauche = 0, dw_droite = 0;
    
-
-       w_bas = check_wall(labyrinthe,1);
-       w_haut = check_wall(labyrinthe,3);
-       w_droite = check_wall(labyrinthe,2);
-       w_gauche = check_wall(labyrinthe,0);
-
+        w_droite = check_wall(labyrinthe,2);
+        w_gauche = check_wall(labyrinthe,0);
+        w_haut = check_wall(labyrinthe,3);
+        w_bas = check_wall(labyrinthe,1);
         if (!w_bas)
         {
             dw_bas = check_double_wall(labyrinthe,1);
@@ -192,7 +204,7 @@ int check_cul_de_sac(LABYRINTHE* labyrinthe, int direction)
         {
             dw_gauche = check_double_wall(labyrinthe,0);
         }
-        printf("[DEBUG][check_cul_de_sac] %d\n",((dw_bas + dw_haut + dw_droite + dw_gauche) + ( w_gauche +w_bas + w_haut + w_droite)));
+        if(debug) printf("[DEBUG][check_cul_de_sac] %d\n",((dw_bas + dw_haut + dw_droite + dw_gauche) + ( w_gauche +w_bas + w_haut + w_droite)));
         return (dw_bas + dw_haut + dw_droite + dw_gauche) + ( w_gauche +w_bas + w_haut + w_droite);
     
 }
