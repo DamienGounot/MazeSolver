@@ -4,6 +4,7 @@
 #include "../header/validation.h"
 #include "../header/init.h"
 #include "../header/creation.h"
+#include "../header/affichage.h"
 #include <time.h>
 
 FILE *creation_fichier(int nbLin, int nbCol, char *nom)
@@ -14,6 +15,8 @@ FILE *creation_fichier(int nbLin, int nbCol, char *nom)
     unsigned short int** matrice = init_matrice(nbLin, nbCol);
     cassage_segments_externes(matrice,nbLin,nbCol);
     cassage_interne(matrice,nbLin,nbCol);
+    rebouche_segments_externes(matrice,nbLin,nbCol);
+    rebouche_interne(matrice,nbLin,nbCol);
 
     fic = fopen(nom,"w+");
     if (fic == NULL)
@@ -203,5 +206,116 @@ void cassage_interne(unsigned short int** matrice,int nbLin,int nbCol)
                 matrice[i][j-1] = (matrice[i][j-1])^4; //mur droit case de gauche
             }
         }   
+    }
+}
+
+void rebouche_interne(unsigned short int** matrice,int nbLin,int nbCol)
+{
+    for (int i = 1; i < nbLin-1; i++)
+    {
+        for (int j = 1; j < nbCol-1; j++)
+        {
+            int mur_droite = get_bit2_value(matrice[i][j]);
+            int mur_bas = get_bit1_value(matrice[i][j]);
+            int mur_droite_case_bas = get_bit2_value(matrice[i+1][j]);
+            int mur_bas_case_droite = get_bit1_value(matrice[i][j+1]);
+
+            if ((mur_bas==mur_droite)&&(mur_bas==mur_droite_case_bas)&&(mur_bas == mur_bas_case_droite)&&(mur_bas==0))
+            {
+                int alea = rand()%4;
+                switch (alea)
+                {
+                case 0:
+                    matrice[i][j] = (matrice[i][j]|2); // pose mur bas case act
+                    matrice[i+1][j] = (matrice[i+1][j]|8); // pose mur haut case bas
+                    break;
+                case 1:
+                    matrice[i+1][j] = (matrice[i+1][j]|4); // pose mur droite case bas
+                    matrice[i+1][j+1] = (matrice[i+1][j+1]|1); // pose mur gauche case bas droite
+                    break;                
+                case 2:
+                    matrice[i][j+1] = (matrice[i][j+1]|2); // pose mur bas case droite
+                    matrice[i+1][j+1] = (matrice[i+1][j+1]|8); // pose mur haut case bas droite
+                    break;
+                case 3:
+                    matrice[i][j] = (matrice[i][j]|4); // pose mur droite case act
+                    matrice[i][j+1] = (matrice[i][j+1]|1); // pose mur gauche case droite
+                    break;
+                }
+            }
+            
+        }
+    }
+}
+
+void rebouche_segments_externes(unsigned short int** matrice,int nbLin,int nbCol)
+{
+    rebouche_segment_haut(matrice,nbLin,nbCol);
+    rebouche_segment_droite(matrice,nbLin,nbCol);
+    rebouche_segment_bas(matrice,nbLin,nbCol);
+    rebouche_segment_gauche(matrice,nbLin,nbCol);
+}
+
+void rebouche_segment_haut(unsigned short int** matrice,int nbLin,int nbCol)
+{
+    for (int i = 0; i < nbCol-1; i++) // pour tout le segment du haut (sauf derniere case)
+    {
+        int mur_bas = get_bit1_value(matrice[0][i]);
+        int mur_droite_case_bas = get_bit2_value(matrice[1][i]);
+        int mur_bas_case_droite = get_bit1_value(matrice[0][i+1]);
+
+        if ((mur_bas == mur_bas_case_droite) && (mur_bas == mur_droite_case_bas) && (mur_bas == 0))
+        {
+            matrice[0][i] = (matrice[0][i]|4); // pose mur droite case actuelle
+            matrice[0][i+1] = (matrice[0][i+1]|1); // pose mur gauche case de droite
+        }
+        
+    }
+}
+void rebouche_segment_droite(unsigned short int** matrice,int nbLin,int nbCol)
+{
+    for (int i = 0; i < nbLin-1; i++) // pour tout le segment de droite (sauf derniere case)
+    {
+        int mur_gauche = get_bit0_value(matrice[i][nbLin-1]);
+        int mur_bas_case_gauche = get_bit1_value(matrice[i][nbLin-2]);
+        int mur_gauche_case_bas = get_bit0_value(matrice[i+1][nbLin-1]);
+
+        if ((mur_gauche == mur_bas_case_gauche) && (mur_gauche == mur_gauche_case_bas) && (mur_gauche == 0))
+        {
+            matrice[i][nbLin-1] = (matrice[i][nbLin-1]|2); // pose mur bas case actuelle
+            matrice[i+1][nbLin-1] = (matrice[i+1][nbLin-1]|8); // pose mur haut case du bas
+        }
+    }    
+}
+void rebouche_segment_bas(unsigned short int** matrice,int nbLin,int nbCol)
+{
+    for (int i = nbCol -1; i > 0; i--) // pour tout le segment du bas (sauf derniere case)
+    {
+        int mur_haut = get_bit3_value(matrice[nbLin-1][i]);
+        int mur_haut_case_gauche = get_bit3_value(matrice[nbLin-1][i-1]);
+        int mur_gauche_case_haut = get_bit2_value(matrice[nbLin-2][i]);
+
+        if ((mur_haut==mur_haut_case_gauche)&&(mur_haut==mur_gauche_case_haut)&&(mur_haut==0))
+        {
+            matrice[nbLin-1][i] = (matrice[nbLin-1][i]|1); // pose mur gauche case act
+            matrice[nbLin-1][i-1] = (matrice[nbLin-1][i-1]|4); // pose mur droite case gauche
+        }
+        
+    }    
+}
+void rebouche_segment_gauche(unsigned short int** matrice,int nbLin,int nbCol)
+{
+    for (int i = nbLin -1; i > 0; i--) // pour tout le segment de gauche (sauf derniere case)
+    {
+        int mur_droite = get_bit2_value(matrice[i][0]);
+        int mur_droite_case_haut = get_bit2_value(matrice[i-1][0]);
+        int mur_haut_case_droite = get_bit3_value(matrice[i][1]);
+
+        if ((mur_droite == mur_haut_case_droite)&&(mur_droite==mur_droite_case_haut)&&(mur_droite==0))
+        {
+            matrice[i][0] = (matrice[i][0]|8); // pose mur haut case act
+            matrice[i-1][0] = (matrice[i-1][0]|2); // pose mur bas case haut
+        }
+        
     }
 }

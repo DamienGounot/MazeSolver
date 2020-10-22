@@ -13,7 +13,7 @@ void IA(LABYRINTHE* labyrinthe)
     int next_direction;
     int mur_value, next_case_mur_invisible_value;//,mur_invisible_value;
     int win = 0;
-    int is_double,is_boucle;
+    int is_double;
 
     piege = est_piege(labyrinthe);
     if (piege)
@@ -28,6 +28,7 @@ void IA(LABYRINTHE* labyrinthe)
 
     while (!win && !piege)
     {
+
         win = check_win(labyrinthe);
         if (win)
         {   
@@ -36,6 +37,7 @@ void IA(LABYRINTHE* labyrinthe)
             printf("Win at (%d;%d) !\n",labyrinthe->IA_x,labyrinthe->IA_y);
             break;
         }
+
         next_direction = rand() % 4; // 0 pour Gauche, 1 pour Bas, 2 pour Droite, 3 pour Haut
         if(debug) printf("Rand next direction: %d\n",next_direction);
         mur_value = get_mur_value(labyrinthe, next_direction);
@@ -49,8 +51,8 @@ void IA(LABYRINTHE* labyrinthe)
             if ((!next_case_mur_invisible_value))
             {
                 // si pas de mur invisible sur la next case (cf on est pas déjà passée dessus)
+
                 poser_mur_invisible(labyrinthe, next_direction);
-                // on pose un mur invisible sur notre case
                 move_IA(labyrinthe, next_direction);
                 update_Path(labyrinthe);
                 // on bouge a l'autre case
