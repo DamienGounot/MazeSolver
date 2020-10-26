@@ -37,7 +37,7 @@ LABYRINTHE init_labyrinthe(FILE* FIC,char* filename)
 }
 
 
-void LIB_MAT(int NB_L,unsigned short int** MAT)
+void free_mat(int NB_L,unsigned short int** MAT)
 {
     for (int i = 0; i < NB_L; i++)
     {

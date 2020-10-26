@@ -41,7 +41,7 @@ int validation_fichier(FILE* fic, char* nom)
     int valid_segment = validation_segments_externes(matrice,nbLignes,nbColonnes);
     int valid_interne = validation_interne(matrice,nbLignes,nbColonnes);
 
-    LIB_MAT(nbLignes,matrice);
+    free_mat(nbLignes,matrice);
     return valid_segment && valid_contour && valid_interne;
 }
 
