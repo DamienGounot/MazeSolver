@@ -17,5 +17,6 @@ typedef struct labyrinthe
 
 int debug;
 #define couleur(param) printf("\033[%sm",param) // change la couleur
+#define interval 500*1000 // Freq affichage
 
 #endif

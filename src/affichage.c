@@ -176,6 +176,6 @@ void update_Path(LABYRINTHE* labyrinthe)
 
 void reset_cursor(LABYRINTHE* labyrinthe)
 {
-    printf("\033[%d;%dH",4+labyrinthe->nbLignes*3,0);
+    printf("\033[%d;%dH",3+labyrinthe->nbLignes*3,0);
 }
 

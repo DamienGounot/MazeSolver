@@ -25,10 +25,10 @@ FILE *creation_fichier(int nbLin, int nbCol, char *nom)
         exit(EXIT_FAILURE);
     }
 
-        int EntreeX = rand()%nbCol;
-        int EntreeY = rand()%nbLin;
-        int SortieX = rand()%nbCol;
-        int SortieY = rand()%nbLin;
+        int EntreeX = rand()%nbLin;
+        int EntreeY = rand()%nbCol;
+        int SortieX = rand()%nbLin;
+        int SortieY = rand()%nbCol;
 
         fprintf(fic,"%d %d %d %d %d %d\n",nbLin,nbCol,EntreeX,EntreeY,SortieX,SortieY);
 
@@ -42,7 +42,7 @@ FILE *creation_fichier(int nbLin, int nbCol, char *nom)
                 fprintf(fic,"\n");
             }
         fclose(fic);
-    LIB_MAT(nbLin, matrice);
+    free_mat(nbLin, matrice);
 
     return fic;
 }

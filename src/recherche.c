@@ -23,7 +23,8 @@ void IA(LABYRINTHE* labyrinthe)
         printf("Spawn piégé at (%d;%d) !\n",labyrinthe->IA_x,labyrinthe->IA_y);
     }
     
-
+    print_Entree__Sortie(labyrinthe);
+    fflush(stdin);
     
 
     while (!win && !piege)
@@ -54,7 +55,10 @@ void IA(LABYRINTHE* labyrinthe)
 
                 poser_mur_invisible(labyrinthe, next_direction);
                 move_IA(labyrinthe, next_direction);
+                print_Entree__Sortie(labyrinthe);
                 update_Path(labyrinthe);
+                usleep(interval);
+                fflush(stdout);
                 // on bouge a l'autre case
                     
             }
@@ -74,7 +78,10 @@ void IA(LABYRINTHE* labyrinthe)
                     { // si impasse, on pose un mur invisible et on bouge
                         poser_mur_invisible(labyrinthe, next_direction);
                         move_IA(labyrinthe, next_direction);
+                        print_Entree__Sortie(labyrinthe);
                         update_Path(labyrinthe);
+                        usleep(interval);
+                        fflush(stdout);                        
                     }
                 }
                 else
